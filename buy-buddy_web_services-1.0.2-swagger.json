@@ -11063,13 +11063,16 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "zone_idid": {
+                    "zone_id": {
                       "type": "integer"
                     },
                     "zone_name": {
                       "type": "string"
                     },
                     "stock_count": {
+                      "type": "integer"
+                    },
+                    "rate": {
                       "type": "integer"
                     }
                   }
