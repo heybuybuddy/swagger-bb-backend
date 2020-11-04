@@ -7025,7 +7025,7 @@
         }
       }
     },
-     "/merchant/alarmed/average_response": {
+    "/merchant/alarmed/average_response": {
       "get": {
         "tags": [
           "get",
@@ -8317,6 +8317,41 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ZoneStock"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/zone/stock_rate": {
+      "get": {
+        "tags": [
+          "get stock rate",
+          "zone"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZoneStockRate"
                 }
               }
             }
@@ -11009,6 +11044,41 @@
           }
         }
       },
+      "ZoneStockRate": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "store_name": {
+                "type": "string"
+              },
+              "store_id": {
+                "type": "integer"
+              },
+              "stock_count": {
+                "type": "integer"
+              },
+              "zones": {
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "zone_idid": {
+                      "type": "integer"
+                    },
+                    "zone_name": {
+                      "type": "string"
+                    },
+                    "stock_count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "ZoneStock": {
         "type": "object",
         "properties": {
@@ -12646,7 +12716,7 @@
               }
             }
           },
-          "total_count":{
+          "total_count": {
             "type": "integer"
           }
         }
@@ -12668,7 +12738,7 @@
               }
             }
           },
-          "total_count":{
+          "total_count": {
             "type": "integer"
           }
         }
@@ -12693,7 +12763,7 @@
               }
             }
           },
-          "total_count":{
+          "total_count": {
             "type": "integer"
           }
         }
@@ -12724,7 +12794,7 @@
               }
             }
           },
-          "total_count":{
+          "total_count": {
             "type": "integer"
           }
         }
@@ -12758,7 +12828,7 @@
               }
             }
           },
-          "total_count":{
+          "total_count": {
             "type": "integer"
           }
         }
