@@ -12679,15 +12679,14 @@
       "DailyReport": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "type": "object",
             "properties": {
               "add_to_cart_rate": {
-                "type": "float"
+                "type": "number"
               },
               "abandon_rate": {
-                "type": "float"
+                "type": "number"
               }
             }
           }
@@ -12696,7 +12695,6 @@
       "AverageResponse": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "items": {
               "type": "object",
@@ -12727,7 +12725,6 @@
       "StockQuality": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "items": {
               "type": "object",
@@ -12749,7 +12746,6 @@
       "DeviceStatus": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "items": {
               "type": "object",
@@ -12774,7 +12770,6 @@
       "MostInteractionItem": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "items": {
               "type": "object",
@@ -12789,7 +12784,7 @@
                   "type": "string"
                 },
                 "meta_data": {
-                  "type": "json"
+                  "type": "string"
                 },
                 "brand_name": {
                   "type": "string"
@@ -12805,16 +12800,15 @@
       "DailyStoreReport": {
         "type": "object",
         "properties": {
-          "type": "object",
           "data": {
             "items": {
               "type": "object",
               "properties": {
                 "add_to_cart_rate": {
-                  "type": "float"
+                  "type": "number"
                 },
                 "abandon_rate": {
-                  "type": "float"
+                  "type": "number"
                 },
                 "store_name": {
                   "type": "string"
@@ -12826,7 +12820,7 @@
                   "type": "integer"
                 },
                 "add_to_basket": {
-                  "type": "float"
+                  "type": "number"
                 }
               }
             }
