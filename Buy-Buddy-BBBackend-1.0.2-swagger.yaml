@@ -1722,6 +1722,111 @@ paths:
                   $ref: '#/components/schemas/UpdatableModel'
         '400':
           description: bad input parameter
+  '/merchant/web_hook_url_assignment':
+    post:
+      tags:
+        - post
+        - merchant
+      summary: create webhook url assignment
+      description: create an assignment between a new url and a merchant
+      operationId: merchantWebhookURLPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                url: 
+                  type: string
+                event_type_id: 
+                  type: integer
+                store_id: 
+                  type: integer
+        description: Url of the receiver, type of event the webhook will be sent on and the store id of the store the url will belong to.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    properties:
+                      store_web_hook_assignment:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          store_id:
+                            type: integer
+                          secret:
+                            type: string
+                          inserted_at:
+                            type: string
+                      store_web_hook_url_assignment:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          store_id:
+                            type: integer
+                          event_type_id:
+                            type: integer
+                          url:
+                            type: string
+                          inserted_at:
+                            type: string
+                          updated_at:
+                            type: string
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
+  '/merchant/{id}/web_hook_url_assignment':
+    get:
+      tags:
+        - get
+        - merchant
+      summary: create webhook url assignment
+      description: fetch the assignments of the merchant
+      operationId: merchantWebhookURLGet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+          description: id of the merchant.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        secret:
+                          type: string
+                        event:
+                          type: string
+                        store_name:
+                          type: string
+                    
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
   '/merchant/{id}':
     get:
       tags:
