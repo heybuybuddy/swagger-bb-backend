@@ -1722,6 +1722,86 @@ paths:
                   $ref: '#/components/schemas/UpdatableModel'
         '400':
           description: bad input parameter
+  '/merchant/web_hook_passphrase_assignment':
+    post:
+      tags:
+        - post
+        - merchant
+      summary: create webhook passphrase assignment
+      description: create an assignment between a new url and a merchant
+      operationId: merchantWebhookPassphraseAssignmentPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                merchant_id: 
+                  type: integer
+        description: Merchant id of the merchant the passphrase will belong to.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    properties:
+                        id:
+                          type: integer
+                        merchant_id:
+                          type: integer
+                        secret:
+                          type: string
+                        inserted_at:
+                          type: string
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
+  '/merchant/{id}/web_hook_passphrase_assignment':
+    get:
+      tags:
+        - get
+        - merchant
+      summary: fetch merchant web hook secret
+      description: fetch the assignments of the merchant
+      operationId: merchantWebhookPassphraseGet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+          description: id of the merchant.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    properties:
+                      secret:
+                        type: string
+                      merchant_id:
+                        type: integer
+                      merchant:
+                        type: string
+                    
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
   '/merchant/web_hook_url_assignment':
     post:
       tags:
@@ -1755,32 +1835,18 @@ paths:
                   data: 
                     type: object
                     properties:
-                      store_web_hook_assignment:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          store_id:
-                            type: integer
-                          secret:
-                            type: string
-                          inserted_at:
-                            type: string
-                      store_web_hook_url_assignment:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          store_id:
-                            type: integer
-                          event_type_id:
-                            type: integer
-                          url:
-                            type: string
-                          inserted_at:
-                            type: string
-                          updated_at:
-                            type: string
+                        id:
+                          type: integer
+                        store_id:
+                          type: integer
+                        event_type_id:
+                          type: integer
+                        url:
+                          type: string
+                        inserted_at:
+                          type: string
+                        updated_at:
+                          type: string
         '400':
           description: bad input parameter
         '422':
@@ -1815,8 +1881,6 @@ paths:
                       type: object
                       properties:
                         url:
-                          type: string
-                        secret:
                           type: string
                         event:
                           type: string
