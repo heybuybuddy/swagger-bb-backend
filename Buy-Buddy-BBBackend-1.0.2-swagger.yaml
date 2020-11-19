@@ -1763,6 +1763,55 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
+  '/merchant/web_hook_url_assignment/{assignment_id}/invalidation':
+    post:
+      tags:
+        - post
+        - merchant
+      summary: invalidate merchant web hook url assignment
+      description: invalidate merchant web hook url assignment
+      operationId: merchantWebhookURLAssignmentInvalidation
+      parameters:
+        - name: assignment_id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+          description: id of the assignment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                user_id: 
+                  type: integer
+        description: assignment id of the url belongs to.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    properties:
+                      assignment_id:
+                        type: integer
+                      user_id:
+                        type: integer
+                      inserted_at:
+                        type: string
+                    
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
   '/merchant/{id}/web_hook_passphrase_assignment':
     get:
       tags:
