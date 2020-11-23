@@ -138,7 +138,7 @@ paths:
         - user
       summary: third party sign in
       description: |
-        By passing in the appropriate options, you create a json web token to access the platform 
+        By passing in the appropriate options, you create a json web token to access the platform
       operationId: thirdpartysignin
       requestBody:
         description: passphrase and user_id
@@ -583,6 +583,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDeviceInformation'
+        '400':
+          description: bad input parameter
+  /user/should_process:
+    get:
+      tags:
+        - get
+        - user
+      summary: interaction should process
+      description: get information of the user should process of the interaction
+      parameters:
+        - name: device_id
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: event_id
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: result of the device information assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShouldProcess'
         '400':
           description: bad input parameter
   /location/country:
@@ -1485,7 +1516,7 @@ paths:
         - version
       summary: fetch devices version history
       description: |
-        you can fetch devices version history 
+        you can fetch devices version history
       parameters:
         - name: pending_update
           in: query
@@ -1736,8 +1767,8 @@ paths:
           application/json:
             schema:
               type: object
-              properties: 
-                merchant_id: 
+              properties:
+                merchant_id:
                   type: integer
         description: Merchant id of the merchant the passphrase will belong to.
       responses:
@@ -1748,7 +1779,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     type: object
                     properties:
                         id:
@@ -1786,8 +1817,8 @@ paths:
           application/json:
             schema:
               type: object
-              properties: 
-                user_id: 
+              properties:
+                user_id:
                   type: integer
         description: assignment id of the url belongs to.
       responses:
@@ -1798,7 +1829,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     type: object
                     properties:
                       assignment_id:
@@ -1837,7 +1868,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     type: object
                     properties:
                       secret:
@@ -1865,12 +1896,12 @@ paths:
           application/json:
             schema:
               type: object
-              properties: 
-                url: 
+              properties:
+                url:
                   type: string
-                event_type_id: 
+                event_type_id:
                   type: integer
-                store_id: 
+                store_id:
                   type: integer
         description: Url of the receiver, type of event the webhook will be sent on and the store id of the store the url will belong to.
       responses:
@@ -1881,7 +1912,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     type: object
                     properties:
                         id:
@@ -1925,7 +1956,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       type: object
                       properties:
@@ -3147,7 +3178,7 @@ paths:
       summary: Get retail action
       operationId: merchantRetailAction
       description: |
-        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
+        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event.
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -3190,7 +3221,7 @@ paths:
       summary: Get hardware status
       operationId: merchantHardwareStatus
       description: |
-        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
+        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event.
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -7968,6 +7999,19 @@ components:
           type: string
         inserted_at:
           type: string
+    ShouldProcess:
+      type: object
+      properties:
+        event_name:
+          type: string
+        event_id:
+          type: integer
+        should_process:
+          type: boolean
+        device_id:
+          type: integer
+        user_id :
+          type: integer
     StateInfo:
       type: object
       properties:
@@ -10059,3 +10103,4 @@ components:
           - place
           - user
           - tag
+
