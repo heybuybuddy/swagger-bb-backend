@@ -593,13 +593,13 @@ paths:
       summary: interaction should process
       description: get information of the user should process of the interaction
       parameters:
-        - name: device_id
+        - name: device_identifier
           in: query
           required: true
           style: form
           explode: true
           schema:
-            type: integer
+            type: string
         - name: event_id
           in: query
           required: true
@@ -8008,8 +8008,8 @@ components:
           type: integer
         should_process:
           type: boolean
-        device_id:
-          type: integer
+        device_identifier:
+          type: string
         user_id :
           type: integer
     StateInfo:
