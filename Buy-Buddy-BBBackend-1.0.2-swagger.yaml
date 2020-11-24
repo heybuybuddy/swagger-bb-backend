@@ -8008,13 +8008,25 @@ components:
           type: integer
         should_process:
           type: boolean
+        device_id:
+          type: integer
         device_identifier:
           type: string
-        user_id :
+        user_id:
           type: integer
+        zone_id:
+          type: integer
+        zone_name:
+          type: string
+        store_id:
+          type: integer
+        store_name:
+          type: string
+        item_barcode:
+          type: string
     StateInfo:
-      type: object
-      properties:
+       type: object
+       properties:
         id:
           type: integer
         inserted_at:
