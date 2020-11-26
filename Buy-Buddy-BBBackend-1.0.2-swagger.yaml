@@ -1590,7 +1590,7 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-  /software_version/list:
+  
     get:
       tags:
         - get
@@ -1631,7 +1631,7 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-  /hardware_version/list:
+    
     get:
       tags:
         - get
@@ -1672,7 +1672,7 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-  /hardware_software_assignment/list:
+  
     get:
       tags:
         - get
