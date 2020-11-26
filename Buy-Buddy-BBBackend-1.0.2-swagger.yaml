@@ -1607,6 +1607,88 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SoftwareVersion'
+  /hardware_version:
+    post:
+      tags:
+        - post
+        - hardware_version
+      summary: create hardware version
+      description: you can create a hardware version.
+      requestBody:
+        description: create action type
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/hardware_version_body'
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HardwareVersion'
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
+  /hardware_version/list:
+    get:
+      tags:
+        - get
+        - hardware_version
+      summary: fetch hardware version
+      description: you can fetch scanners hardware version.
+      operationId: hardwareversionlist
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HardwareVersion'
+  /hardware_software_assignment:
+    post:
+      tags:
+        - post
+        - hardware_software_assignment
+      summary: 'create hardware software assignment '
+      description: you can create a hardware software assignment.
+      requestBody:
+        description: create action type
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/hardware_software_assignment_body'
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HardwareSoftwareAssignment'
+        '400':
+          description: bad input parameter
+        '422':
+          description: unprocessable entity
+  /hardware_software_assignment/list:
+    get:
+      tags:
+        - get
+        - hardware_software_assignment
+      summary: fetch ardware software assignments
+      description: you can fetch ardware software assignments.
+      operationId: ardwaresoftwareassignment
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HardwareSoftwareAssignmentList'
   /action_type:
     post:
       tags:
@@ -1753,7 +1835,7 @@ paths:
                   $ref: '#/components/schemas/UpdatableModel'
         '400':
           description: bad input parameter
-  '/merchant/web_hook_passphrase_assignment':
+  /merchant/web_hook_passphrase_assignment:
     post:
       tags:
         - post
@@ -1782,14 +1864,14 @@ paths:
                   data:
                     type: object
                     properties:
-                        id:
-                          type: integer
-                        merchant_id:
-                          type: integer
-                        secret:
-                          type: string
-                        inserted_at:
-                          type: string
+                      id:
+                        type: integer
+                      merchant_id:
+                        type: integer
+                      secret:
+                        type: string
+                      inserted_at:
+                        type: string
         '400':
           description: bad input parameter
         '422':
@@ -1838,7 +1920,6 @@ paths:
                         type: integer
                       inserted_at:
                         type: string
-                    
         '400':
           description: bad input parameter
         '422':
@@ -1877,12 +1958,11 @@ paths:
                         type: integer
                       merchant:
                         type: string
-                    
         '400':
           description: bad input parameter
         '422':
           description: unprocessable entity
-  '/merchant/web_hook_url_assignment':
+  /merchant/web_hook_url_assignment:
     post:
       tags:
         - post
@@ -1903,7 +1983,7 @@ paths:
                   type: integer
                 store_id:
                   type: integer
-        description: Url of the receiver, type of event the webhook will be sent on and the store id of the store the url will belong to.
+        description: 'Url of the receiver, type of event the webhook will be sent on and the store id of the store the url will belong to.'
       responses:
         '200':
           description: result
@@ -1915,18 +1995,18 @@ paths:
                   data:
                     type: object
                     properties:
-                        id:
-                          type: integer
-                        store_id:
-                          type: integer
-                        event_type_id:
-                          type: integer
-                        url:
-                          type: string
-                        inserted_at:
-                          type: string
-                        updated_at:
-                          type: string
+                      id:
+                        type: integer
+                      store_id:
+                        type: integer
+                      event_type_id:
+                        type: integer
+                      url:
+                        type: string
+                      inserted_at:
+                        type: string
+                      updated_at:
+                        type: string
         '400':
           description: bad input parameter
         '422':
@@ -1966,7 +2046,6 @@ paths:
                           type: string
                         store_name:
                           type: string
-                    
         '400':
           description: bad input parameter
         '422':
@@ -6553,8 +6632,26 @@ components:
           type: integer
         version:
           type: string
-        version_urş:
+        version_url:
           type: string
+    hardware_version_body:
+      type: object
+      properties:
+        description:
+          type: string
+        device_type_id:
+          type: integer
+        version:
+          type: string
+        image_url:
+          type: string
+    hardware_software_assignment_body:
+      type: object
+      properties:
+        software_id:
+          type: integer
+        hardware_id:
+          type: integer
     user_create:
       type: object
       properties:
@@ -8025,8 +8122,8 @@ components:
         item_barcode:
           type: string
     StateInfo:
-       type: object
-       properties:
+      type: object
+      properties:
         id:
           type: integer
         inserted_at:
@@ -8062,19 +8159,75 @@ components:
     SoftwareVersion:
       type: object
       properties:
-        id:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            inserted_at:
+              type: string
+            format: date-time
+            description:
+              type: string
+            device_type_id:
+              type: integer
+            version:
+              type: string
+            version_url:
+              type: string
+        total_count:
           type: integer
-        inserted_at:
-          type: string
-          format: date-time
-        description:
-          type: string
-        device_type_id:
+    HardwareVersion:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            inserted_at:
+              type: string
+            format: date-time
+            description:
+              type: string
+            device_type_id:
+              type: integer
+            version:
+              type: string
+            image_url:
+              type: string
+        total_count:
           type: integer
-        version:
-          type: string
-        version_url:
-          type: string
+    HardwareSoftwareAssignment:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            inserted_at:
+              type: string
+            software_id:
+              type: string
+            hardware_id:
+              type: integer
+    HardwareSoftwareAssignmentList:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            inserted_at:
+              type: string
+            software_id:
+              type: string
+            hardware_id:
+              type: integer
+        total_count:
+          type: integer
     AlarmHistory:
       type: object
       properties:
@@ -10115,4 +10268,3 @@ components:
           - place
           - user
           - tag
-
