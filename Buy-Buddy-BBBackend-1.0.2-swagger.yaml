@@ -1623,6 +1623,16 @@ paths:
         - post
         - hardware_version
       summary: create hardware version
+      parameters:
+        - name: device_type_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
       description: you can create a hardware version.
       requestBody:
         description: create action type
