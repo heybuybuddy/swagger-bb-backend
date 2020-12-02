@@ -3213,7 +3213,7 @@ paths:
                   $ref: '#/components/schemas/AssignmentCount'
         '400':
           description: bad input parameter
-  '/merchant/{merchant_id}/store/{store_id}/scanner':
+  '/merchant/store/{store_id}/scanner':
     get:
       tags:
         - get
@@ -3223,14 +3223,6 @@ paths:
         By passing in the appropriate options, you can fetch the scanners of a store.
       operationId: scannerfilter
       parameters:
-        - name: merchant_id
-          in: path
-          description: merchant identifier
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: integer
         - name: store_id
           in: path
           description: store identifier
@@ -3245,8 +3237,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/ScannerManagement'
         '400':
           description: bad input parameter
@@ -8136,14 +8126,26 @@ components:
     ScannerManagement:
       type: object
       properties:
-        scanner_id:
+        scanner_array:
+          items:
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              store_id:
+                type: integer
+              status:
+                type: string
+              last_reading_time:
+                type: string
+                format: date-time
+        offline_scanner_count :
           type: integer
-        scanner_name:
-          type: string
-        store_id:
+        online_scanner_count:
           type: integer
-        last_reading_time:
-          type: string
+        total_scanner_count:
+         type: integer
     Event:
       type: object
       properties:
@@ -8166,7 +8168,7 @@ components:
               type: integer
             inserted_at:
               type: string
-            format: date-time
+              format: date-time
             description:
               type: string
             device_type_id:
@@ -8187,7 +8189,7 @@ components:
               type: integer
             inserted_at:
               type: string
-            format: date-time
+              format: date-time
             description:
               type: string
             device_type_id:
@@ -10268,3 +10270,4 @@ components:
           - place
           - user
           - tag
+
