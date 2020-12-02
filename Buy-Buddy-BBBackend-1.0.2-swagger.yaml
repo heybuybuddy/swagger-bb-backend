@@ -1590,11 +1590,21 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-  
+
     get:
       tags:
         - get
         - software_version
+      parameters:
+        - name: hardware_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
       summary: fetch software version
       description: you can fetch scanners software version.
       operationId: softwareversionlist
@@ -1631,7 +1641,7 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-    
+
     get:
       tags:
         - get
@@ -1672,7 +1682,7 @@ paths:
           description: bad input parameter
         '422':
           description: unprocessable entity
-  
+
     get:
       tags:
         - get
@@ -10270,4 +10280,3 @@ components:
           - place
           - user
           - tag
-
