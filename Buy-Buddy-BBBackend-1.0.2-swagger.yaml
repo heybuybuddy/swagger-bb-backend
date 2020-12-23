@@ -1117,6 +1117,45 @@ paths:
                   inserted_at:
                     type: string
                     format: date-time
+  /device/zone_assignment:
+    post:
+      tags:
+        - device
+        - zone_assignment
+      summary: device zone assignment
+      description: device zone assignment
+      parameters:
+        - name: device_id
+          description: device identifier
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: zone_id
+          description: zone identifier
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      zone_id:
+                        type: integer
+                      device_id:
+                        type: integer
+                      inserted_at:
+                        type: string
   /device/alarm_action:
     post:
       tags:
