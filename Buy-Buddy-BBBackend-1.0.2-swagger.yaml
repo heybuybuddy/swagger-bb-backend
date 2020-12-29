@@ -1123,20 +1123,21 @@ paths:
         - device
         - zone_assignment
       summary: device zone assignment
-      description: device zone assignment
+      consumes:
+        - application/json
       parameters:
-        - name: device_id
-          description: device identifier
-          required: true
-          explode: true
+        - in: body
+          name: user
+          description: The user to create.
           schema:
-            type: string
-        - name: zone_id
-          description: zone identifier
-          required: true
-          explode: true
-          schema:
-            type: string
+            type: object
+            required:
+              - userName
+            properties:
+              device_id:
+                type: integer
+              zone_id:
+                type: integer
       responses:
         '200':
           description: result
@@ -10507,8 +10508,8 @@ components:
       schema:
         type: array
         items:
-          type: integer
-      required: false
+          type: intoger
+      required: false device zone assignment
     UserID:
       in: query
       name: user_id
