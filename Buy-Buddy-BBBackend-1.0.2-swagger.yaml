@@ -1123,23 +1123,14 @@ paths:
         - device
         - zone_assignment
       summary: device zone assignment
-      consumes:
-        - application/json
-      parameters:
-        - in: body
-          name: user
-          description: The user to create.
-          schema:
-            type: object
-            required:
-              - userName
-            properties:
-              device_id:
-                type: integer
-              zone_id:
-                type: integer
+      requestBody:
+        description: create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/device_zone_assignment'
       responses:
-        '200':
+        '201':
           description: result
           content:
             application/json:
@@ -6871,7 +6862,8 @@ components:
         SKU:
           type: string
         file:
-          type: file
+          type: string
+          format: binary
     hardware_version_body:
       type: object
       properties:
@@ -6883,6 +6875,13 @@ components:
           type: string
         image_url:
           type: string
+    device_zone_assignment:
+      type: object
+      properties:
+        zone_id:
+          type: integer
+        device_id:
+          type: integer
     hardware_software_assignment_body:
       type: object
       properties:
@@ -10508,8 +10507,8 @@ components:
       schema:
         type: array
         items:
-          type: intoger
-      required: false device zone assignment
+          type: integer
+      required: false
     UserID:
       in: query
       name: user_id
