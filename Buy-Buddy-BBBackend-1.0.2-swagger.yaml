@@ -5401,7 +5401,228 @@ paths:
           content:
             application/json:
               schema:
-               $ref: '#/components/schemas/Campaign'        
+               $ref: '#/components/schemas/Campaign'
+  /campaign/time_type:
+    get: 
+      tags:
+        - get 
+        - campaign
+      summary: get campaign list  
+      description: get list of campaings
+      operationId: getListCampaignTimeType
+      responses:
+        '201':
+          description: campaign list
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign_Time_Get'
+  '/campaign/{campaign_id}/time':
+    post: 
+      tags:
+        - post 
+        - campaign
+      summary: create campaign time
+      description: create campaign time
+      operationId: createCampaignTime
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer   
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_time_create_body'            
+      responses:
+        '201':
+          description: campaign list
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign_Time_Create'
+    get: 
+      tags:
+        - post 
+        - campaign
+      summary: list a campaign time 
+      description: create campaign time
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer   
+      responses:
+        '200':
+          description: campaign list
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Campaign_Time_Create'                
+  '/campaign/{campaign_id}/store':
+    post:
+      tags:
+       - post
+       - campaign
+      summary: store assignment
+      description: create store assignment for campaign
+      operationId: createStoreAssignmentCampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_store_assignment_create'
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign'              
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get store assignment list for a campaign
+      operationId: getStoreAssignmentListCampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignStore'
+  '/campaign/{campaign_id}/store/{assignment_id}':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get store assignment list for a campaign
+      operationId: getStoreAssignmentACampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer  
+        - name: assignment_id
+          in: path
+          required: true
+          schema:
+            type: integer              
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignStore'
+  '/campaign/{campaign_id}/item':
+    post:
+      tags:
+       - post
+       - campaign
+      summary: item assignment
+      description: create item assignment for campaign
+      operationId: createItemAssignmentCampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_item_assignment_create'
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignItem'              
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get item assignment list for a campaign
+      operationId: getItemAssignmentListCampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignItem'
+  '/campaign/{campaign_id}/item/{assignment_id}':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get store assignment list for a campaign
+      operationId: getItemAssignmentACampaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer  
+        - name: assignment_id
+          in: path
+          required: true
+          schema:
+            type: integer              
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignItem'                  
   /map:
     post:
       tags:
@@ -5789,8 +6010,8 @@ paths:
       tags:
         - zone
         - post
-      summary: create zone test
-      description: create zone test
+      summary: create zone
+      description: create zone
       requestBody:
         content:
           application/json:
@@ -6137,706 +6358,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ZoneStockRate'
-  /ab_test:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab tests
-      description: get ab tests
-      parameters:
-        - name: merchant_id
-          in: query
-          required: false
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/{id}':
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test
-      description: get ab test
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/{id}/delete':
-    put:
-      tags:
-        - ab test
-        - experimentation
-        - delete
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: NoContent
-  '/ab_test/{id}/finish':
-    put:
-      tags:
-        - ab test
-        - experimentation
-        - finish
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: NoContent
-  /ab_test/type:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test types
-      description: get ab test types
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestTypes'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/type/{id}':
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test type
-      description: get ab test type
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestType'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  /ab_test/group:
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      summary: create ab test group
-      description: create ab test group
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_group_create'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestGroupCreate'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test groups
-      description: get ab test groups
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestGroupCreate'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/group/{id}':
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test group
-      description: get ab test group
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestGroup'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/{test_id}/location/assignment':
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      summary: create ab test location assignment
-      description: create ab test location assignment
-      parameters:
-        - name: test_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_create_location_assigment'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestCreateLocationAssignment'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test location assignment
-      description: get ab test location assignment
-      parameters:
-        - name: test_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestLocationAssignment'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  /ab_test/group/variation:
-    post:
-      tags:
-        - ab test
-        - experimeantation
-        - post
-      summary: create ab test group variation
-      description: create ab test group variation
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_create_group_variation'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestCreateGroupVariation'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test group variation
-      description: get ab test group variation
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestGroupVariation'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/group/variation/{id}':
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: get ab test group variation with id
-      description: get ab test group variation with id
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestGroupVariation'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  /ab_test/entity:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test entity
-      description: get ab test entity
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestEntity'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  /ab_test/text:
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      summary: create ab test text
-      description: create ab test text
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_create_text'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestText'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      summary: get ab test text
-      description: get ab test text
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestTextList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/variation/{variation_id}/item/assignment':
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: create ab test variation item assignment
-      description: create ab test variation item assignment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_variation_item_assignment'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationItemAssignment'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: get ab test variation item assignment
-      description: get ab test variation item assignment
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationItemAssignmentList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/variation/{variation_id}/zone/assignment':
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: create ab test variation zone assignment
-      description: create ab test variation zone assignment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_zone_variation_item_assignment'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationZoneAssignment'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: get ab test variation zone assignment
-      description: get ab test variation zone assignment
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationZoneAssignmentList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/variation/{variation_id}/text/assignment':
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: create ab test variation text assignment
-      description: create ab test variation text assignment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_text_variation_text_assignment'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationTextAssignment'
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: variation_id
-          in: path
-          required: true
-          schema:
-            type: integer
-      summary: get ab test variation text assignment
-      description: get ab test variation text assignment
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ABTestVariationItemAssignmentList'
-        '400':
-          description: BadRequest
-        '422':
-          description: UnprocessableEntity
-  '/ab_test/{test_id}/group/{group_id}/variation/result':
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: test_id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: entity_type_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: base
-          in: query
-          required: true
-          schema:
-            type: string
-            enum:
-              - sale
-              - add_to_cart
-      summary: get ab test group variation result
-      description: get ab test group variation result
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Interaction_Response_200_Item'
-  /ab_test/daily_result:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: test_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: group_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: entity_type_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: metric
-          in: query
-          required: true
-          schema:
-            type: string
-            enum:
-              - sale
-              - picked_up
-              - add_to_cart
-              - average_stock_count
-              - picked_up_to_walking
-              - picked_up_to_sales
-      summary: get ab test group variation daily result
-      description: get ab test group variation daily result
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: '#/components/schemas/ExperimentationDailyResultPickedUp'
-                  - $ref: >-
-                      #/components/schemas/ExperimentationDailyResultPickedUpToSales
-                  - $ref: >-
-                      #/components/schemas/ExperimentationDailyResultPickedUpToWalking
-                  - $ref: '#/components/schemas/ExperimentationDailyResultSale'
-                  - $ref: >-
-                      #/components/schemas/ExperimentationDailyResultAverageStock
-  /ab_test/store_result:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: test_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: group_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: entity_type_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: base
-          in: query
-          required: true
-          schema:
-            type: string
-            enum:
-              - add_to_cart
-              - sale
-      summary: get ab test group variation daily result
-      description: get ab test group variation daily result
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: >-
-                      #/components/schemas/Experimentation_Store_Result_Add_To_Cart
-                  - $ref: '#/components/schemas/Experimentation_Store_Result'
-  /ab_test/item_result:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: test_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: group_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: entity_type_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: base
-          in: query
-          required: true
-          schema:
-            type: string
-            enum:
-              - add_to_cart
-              - sale
-      summary: get ab test group variation daily result
-      description: get ab test group variation daily result
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: >-
-                      #/components/schemas/Experimentation_Item_Result_Add_To_Cart
-                  - $ref: '#/components/schemas/Experimentation_Item_Result'
-  /ab_test/information:
-    get:
-      tags:
-        - ab test
-        - experimentation
-        - get
-      parameters:
-        - name: entity_type_id
-          in: query
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Experimentation_Information'
 components:
   responses:
     BadRequest:
@@ -7019,72 +6540,26 @@ components:
           type: string
         user_id:
           type: integer
-    ab_test_group_create:
+    campaign_store_assignment_create:
       type: object
       properties:
-        groups:
-          items:
-            type: object
-            properties:
-              test_id:
-                type: integer
-              name:
-                type: string
-              entity_type_id:
-                type: integer
-    ab_test_create_location_assigment:
+        store_id: 
+          type: integer
+    campaign_time_create_body:
       type: object
       properties:
-        test_id:
+        type_id: 
           type: integer
-        store_id:
-          type: integer
-    ab_test_create_group_variation:
-      type: object
-      properties:
-        name:
-          type: string
-        variation_type_id:
-          type: integer
-        group_id:
-          type: integer
-        started_at:
+        start_date:
           type: string
           format: date-time
-        finished_at:
+        end_date:
           type: string
-          format: date-time
-    ab_test_create_text:
+          format: date-time    
+    campaign_item_assignment_create:
       type: object
       properties:
-        text:
-          type: string
-    ab_test_variation_item_assignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        item_id:
-          type: integer
-        min_stock:
-          type: integer
-    ab_zone_variation_item_assignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        zone_id:
-          type: integer
-        min_stock:
-          type: integer
-    ab_text_variation_text_assignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        text_id:
-          type: integer
-        min_stock:
+        item_id: 
           type: integer
     merchant_store:
       type: object
@@ -7961,6 +7436,28 @@ components:
                 type: integer
         total_count:
           type: integer  
+    Campaign_Time_Create:
+      type: object
+      properties:
+        data:
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              inserted_at:
+                type: string
+                format: date-time
+              type_id:
+                type: integer
+              start_date:
+                type: string
+                format: date-time
+              end_date:
+                type: string
+                format: date-time
+        total_count:
+          type: integer            
     Campaign_Show:
       type: object
       properties:
@@ -7977,43 +7474,7 @@ components:
                 type: string
               user_id:
                 type: integer
-    Campaign:
-      type: object
-      properties:
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-        user_id:
-          type: integer                
-    ABTestList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ABTestListItem'
-    ABTestListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-        hypothesis:
-          type: string
-        test_type_id:
-          type: string
-        user_id:
-          type: integer
-        finished_at:
-          type: string
-          format: date_time
-        deleted_at:
-          type: string
-          format: date_time
-    ABTestTypes:
+    Campaign_Time_Get:
       type: object
       properties:
         data:
@@ -8025,11 +7486,11 @@ components:
               inserted_at:
                 type: string
                 format: date-time
-              test_type_name:
-                type: integer
+              name:
+                type: string
         total_count:
-          type: integer
-    ABTestType:
+          type: integer                  
+    Campaign:
       type: object
       properties:
         id:
@@ -8037,221 +7498,48 @@ components:
         inserted_at:
           type: string
           format: date-time
-        test_type_name:
-          type: integer
-    ABTestGroupCreate:
+        name:
+          type: string
+        user_id:
+          type: integer 
+    CampaignStore:
       type: object
       properties:
         data:
-          items:
+          items: 
             type: object
             properties:
-              test_id:
+              id:
                 type: integer
               inserted_at:
                 type: string
                 format: date-time
-              name:
-                type: string
-              entity_type_id:
+              store_id:
+                type: integer
+              campaign_id:
                 type: integer
         total_count:
           type: integer
-    ABTestLocationAssignment:
+    CampaignItem:
       type: object
       properties:
         data:
-          items:
+          items: 
             type: object
             properties:
-              test_id:
+              id:
                 type: integer
-              store_id:
+              inserted_at:
+                type: string
+                format: date-time
+              type:
                 type: integer
+              campaign_id:
+                type: integer
+              item_id:
+                type: integer                
         total_count:
-          type: integer
-    ABTestGroup:
-      type: object
-      properties:
-        test_id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-        entity_type_id:
-          type: integer
-    ABTestGroupVariation:
-      type: array
-      items:
-        properties:
-          name:
-            type: string
-          variation_type_id:
-            type: integer
-          group_id:
-            type: integer
-          started_at:
-            type: string
-            format: date-time
-          finished_at:
-            type: string
-            format: date-time
-    ABTestEntity:
-      type: array
-      items:
-        properties:
-          entity_name:
-            type: string
-          id:
-            type: integer
-          inserted_at:
-            type: string
-            format: date-time
-    ABTestTextList:
-      type: array
-      items:
-        properties:
-          text:
-            type: string
-          id:
-            type: integer
-          inserted_at:
-            type: string
-            format: date-time
-    ABTestText:
-      type: object
-      properties:
-        text:
-          type: string
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-    ABTestVariationItemAssignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        item_id:
-          type: integer
-        min_stock:
-          type: integer
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-    ABTestVariationItemAssignmentList:
-      type: array
-      items:
-        type: object
-        properties:
-          variation_id:
-            type: integer
-          item_id:
-            type: integer
-          min_stock:
-            type: integer
-          id:
-            type: integer
-          inserted_at:
-            type: string
-            format: date-time
-    ABTestVariationZoneAssignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        zone_id:
-          type: integer
-        min_stock:
-          type: integer
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-    ABTestVariationZoneAssignmentList:
-      type: array
-      items:
-        type: object
-        properties:
-          variation_id:
-            type: integer
-          zone_id:
-            type: integer
-          min_stock:
-            type: integer
-          id:
-            type: integer
-          inserted_at:
-            type: string
-            format: date-time
-    ABTestVariationTextAssignment:
-      type: object
-      properties:
-        variation_id:
-          type: integer
-        text_id:
-          type: integer
-        min_stock:
-          type: integer
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-    ABTestVariationTextAssignmentList:
-      type: array
-      items:
-        type: object
-        properties:
-          variation_id:
-            type: integer
-          text_id:
-            type: integer
-          min_stock:
-            type: integer
-          id:
-            type: integer
-          inserted_at:
-            type: string
-            format: date-time
-    ABTestCreateLocationAssignment:
-      type: object
-      properties:
-        test_id:
-          type: integer
-        store_id:
-          type: integer
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-    ABTestCreateGroupVariation:
-      type: object
-      properties:
-        name:
-          type: string
-        variation_type_id:
-          type: integer
-        group_id:
-          type: integer
-        started_at:
-          type: string
-          format: date-time
-        finished_at:
-          type: string
-          format: date-time
-        id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
+          type: integer          
     UpdatableModel:
       type: object
       properties:
@@ -8900,27 +8188,6 @@ components:
           type: number
         sale_count:
           type: integer
-    Session:
-      type: object
-      properties:
-        item_id:
-          type: integer
-        average_sale_speed:
-          type: string
-        session_count:
-          type: integer
-        add_to_basket_count:
-          type: integer
-        meta_data:
-          type: string
-        brand_name:
-          type: string
-        brand_id:
-          type: integer
-        product_revenue:
-          type: integer
-        average_stock:
-          type: integer
     SessionItem:
       type: object
       properties:
@@ -9191,17 +8458,6 @@ components:
                 type: number
         total_count:
           type: integer
-    Sale:
-      type: object
-      properties:
-        sale_count:
-          type: integer
-        brand_name:
-          type: string
-        brand_id:
-          type: integer
-        item_id:
-          type: integer
     InterestToBasket:
       type: object
       properties:
@@ -9373,531 +8629,7 @@ components:
           type: string
         interaction_count:
           type: integer
-    InteractionEventItem:
-      type: object
-      properties:
-        name:
-          type: string
-        upc:
-          type: string
-        meta_data:
-          type: object
-        aggregatrion_calculation:
-          type: integer
-    ExperimentationAddToCart:
-      type: object
-      properties:
-        test_id:
-          type: integer
-        upc:
-          type: string
-        meta_data:
-          type: object
-        aggregatrion_calculation:
-          type: integer
-    Interaction_Response_200_Item:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/InteractionEventItem'
-            total_aggregation_calculation:
-              type: integer
-    ExperimentationDailyResultSale:
-      type: object
-      properties:
-        data:
-          items:
-            type: object
-            properties:
-              variation_id:
-                type: integer
-              variation_name:
-                type: integer
-              daily_sales:
-                items:
-                  type: object
-                  properties:
-                    sales:
-                      type: integer
-                    day:
-                      type: string
-                      format: date-time
-    ExperimentationDailyResultAverageStock:
-      type: object
-      properties:
-        data:
-          items:
-            type: object
-            properties:
-              variation_id:
-                type: integer
-              variation_name:
-                type: integer
-              daily_sales:
-                items:
-                  type: object
-                  properties:
-                    avg_stock:
-                      type: integer
-                    day:
-                      type: string
-                      format: date-time
-    ExperimentationDailyResultPickedUpToWalking:
-      type: object
-      properties:
-        data:
-          items:
-            type: object
-            properties:
-              variation_id:
-                type: integer
-              variation_name:
-                type: integer
-              daily_picked_up_to_walking:
-                items:
-                  type: object
-                  properties:
-                    picked_up_to_walking:
-                      type: integer
-                    day:
-                      type: string
-                      format: date-time
-    ExperimentationDailyResultPickedUpToSales:
-      type: object
-      properties:
-        data:
-          items:
-            type: object
-            properties:
-              variation_id:
-                type: integer
-              variation_name:
-                type: integer
-              daily_picked_up_to_sales:
-                items:
-                  type: object
-                  properties:
-                    picked_up_to_sales:
-                      type: integer
-                    day:
-                      type: string
-                      format: date-time
-    ExperimentationDailyResultPickedUp:
-      type: object
-      properties:
-        data:
-          items:
-            type: object
-            properties:
-              variation_id:
-                type: integer
-              variation_name:
-                type: integer
-              daily_session:
-                items:
-                  type: object
-                  properties:
-                    picked_up:
-                      type: integer
-                    walking:
-                      type: integer
-                    day:
-                      type: string
-                      format: date-time
-    Experimentation_Store_Result:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            variation:
-              type: array
-              items:
-                properties:
-                  variation_type:
-                    type: string
-                  variation_id:
-                    type: integer
-                  stock_avail:
-                    type: number
-                  avg_stock:
-                    type: number
-                  min_stock:
-                    type: number
-                  picked_up:
-                    type: integer
-                  walking:
-                    type: integer
-                  abandon:
-                    type: integer
-                  sale:
-                    type: integer
-                  conversion:
-                    type: number
-                  improvement:
-                    type: number
-                  control_picked_up_comparison:
-                    type: number
-                  control_abandon_comparison:
-                    type: number
-                  'control_walking_comparison,':
-                    type: number
-                  control_conversion_comparison:
-                    type: number
-                  control_improvement_comparison:
-                    type: number
-                  'control_variation_name,':
-                    type: number
-                  store_array:
-                    type: array
-                    items:
-                      properties:
-                        variation_type:
-                          type: string
-                        variation_id:
-                          type: integer
-                        variation_name:
-                          type: string
-                        store_id:
-                          type: integer
-                        store_name:
-                          type: string
-                        stock_avail:
-                          type: number
-                        avg_stock:
-                          type: number
-                        min_stock:
-                          type: number
-                        sale:
-                          type: number
-                        walking:
-                          type: number
-                        abandon:
-                          type: number
-                        conversion:
-                          type: number
-                        improvement:
-                          type: number
-                        control_picked_up_comparison:
-                          type: number
-                        control_abandon_comparison:
-                          type: number
-                        control_walking_comparison:
-                          type: number
-                        control_conversion_comparison:
-                          type: number
-                        control_improvement_comparison:
-                          type: number
-                        control_variation_name:
-                          type: string
-    Experimentation_Store_Result_Add_To_Cart:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            variation:
-              type: array
-              items:
-                properties:
-                  variation_type:
-                    type: string
-                  variation_id:
-                    type: integer
-                  variation_name:
-                    type: string
-                  stock_avail:
-                    type: number
-                  avg_stock:
-                    type: number
-                  min_stock:
-                    type: number
-                  picked_up:
-                    type: integer
-                  walking:
-                    type: integer
-                  abandon:
-                    type: integer
-                  picked_up_to_walking:
-                    type: integer
-                  improvement:
-                    type: number
-                  control_picked_up_comparison:
-                    type: number
-                  control_abandon_comparison:
-                    type: number
-                  'control_walking_comparison,':
-                    type: number
-                  control_conversion_comparison:
-                    type: number
-                  control_improvement_comparison:
-                    type: number
-                  'control_variation_name,':
-                    type: number
-                  store_array:
-                    type: array
-                    items:
-                      properties:
-                        variation_type:
-                          type: string
-                        variation_id:
-                          type: integer
-                        variation_name:
-                          type: string
-                        store_id:
-                          type: integer
-                        store_name:
-                          type: string
-                        stock_avail:
-                          type: number
-                        avg_stock:
-                          type: number
-                        min_stock:
-                          type: number
-                        picked_up:
-                          type: number
-                        walking:
-                          type: number
-                        abandon:
-                          type: number
-                        picked_up_to_walking:
-                          type: number
-                        improvement:
-                          type: number
-                        control_picked_up_comparison:
-                          type: number
-                        control_abandon_comparison:
-                          type: number
-                        control_walking_comparison:
-                          type: number
-                        control_conversion_comparison:
-                          type: number
-                        control_improvement_comparison:
-                          type: number
-                        control_variation_name:
-                          type: string
-    Experimentation_Item_Result:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            variation:
-              type: array
-              items:
-                properties:
-                  variation_type:
-                    type: string
-                  variation_id:
-                    type: integer
-                  stock_avail:
-                    type: number
-                  avg_stock:
-                    type: number
-                  min_stock:
-                    type: number
-                  picked_up:
-                    type: integer
-                  walking:
-                    type: integer
-                  abandon:
-                    type: integer
-                  sale:
-                    type: integer
-                  conversion:
-                    type: number
-                  improvement:
-                    type: number
-                  control_picked_up_comparison:
-                    type: number
-                  control_abandon_comparison:
-                    type: number
-                  'control_walking_comparison,':
-                    type: number
-                  control_conversion_comparison:
-                    type: number
-                  control_improvement_comparison:
-                    type: number
-                  'control_variation_name,':
-                    type: number
-                  item_array:
-                    type: array
-                    items:
-                      properties:
-                        variation_type:
-                          type: string
-                        variation_id:
-                          type: integer
-                        variation_name:
-                          type: string
-                        item_id:
-                          type: integer
-                        item_name:
-                          type: string
-                        stock_avail:
-                          type: number
-                        avg_stock:
-                          type: number
-                        min_stock:
-                          type: number
-                        sale:
-                          type: number
-                        walking:
-                          type: number
-                        abandon:
-                          type: number
-                        conversion:
-                          type: number
-                        improvement:
-                          type: number
-                        control_picked_up_comparison:
-                          type: number
-                        control_abandon_comparison:
-                          type: number
-                        control_walking_comparison:
-                          type: number
-                        control_conversion_comparison:
-                          type: number
-                        control_improvement_comparison:
-                          type: number
-                        control_variation_name:
-                          type: string
-    Experimentation_Item_Result_Add_To_Cart:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            variation:
-              type: array
-              items:
-                properties:
-                  variation_type:
-                    type: string
-                  variation_id:
-                    type: integer
-                  variation_name:
-                    type: string
-                  stock_avail:
-                    type: number
-                  avg_stock:
-                    type: number
-                  min_stock:
-                    type: number
-                  picked_up:
-                    type: integer
-                  walking:
-                    type: integer
-                  abandon:
-                    type: integer
-                  picked_up_to_walking:
-                    type: integer
-                  improvement:
-                    type: number
-                  control_picked_up_comparison:
-                    type: number
-                  control_abandon_comparison:
-                    type: number
-                  'control_walking_comparison,':
-                    type: number
-                  control_conversion_comparison:
-                    type: number
-                  control_improvement_comparison:
-                    type: number
-                  'control_variation_name,':
-                    type: number
-                  store_array:
-                    type: array
-                    items:
-                      properties:
-                        variation_type:
-                          type: string
-                        variation_id:
-                          type: integer
-                        variation_name:
-                          type: string
-                        item_id:
-                          type: integer
-                        item_name:
-                          type: string
-                        stock_avail:
-                          type: number
-                        avg_stock:
-                          type: number
-                        min_stock:
-                          type: number
-                        picked_up:
-                          type: number
-                        walking:
-                          type: number
-                        abandon:
-                          type: number
-                        picked_up_to_walking:
-                          type: number
-                        improvement:
-                          type: number
-                        control_picked_up_comparison:
-                          type: number
-                        control_abandon_comparison:
-                          type: number
-                        control_walking_comparison:
-                          type: number
-                        control_conversion_comparison:
-                          type: number
-                        control_improvement_comparison:
-                          type: number
-                        control_variation_name:
-                          type: string
-    Experimentation_Information:
-      type: object
-      properties:
-        test_id:
-          type: integer
-        hypothesis:
-          type: string
-        day:
-          type: number
-        active:
-          type: boolean
-        test_type_id:
-          type: integer
-        entity_type_id:
-          type: integer
-        user_id:
-          type: integer
-        inserted_at:
-          type: string
-          format: date-time
-        finished_at:
-          type: string
-          format: date-time
-        Group:
-          type: array
-          items:
-            properties:
-              group_id:
-                type: integer
-              group_name:
-                type: string
-              Variation:
-                type: array
-                items:
-                  properties:
-                    variation_id:
-                      type: integer
-                    variation_name:
-                      type: string
-                    started_at:
-                      type: string
-                      format: date-time
-                    finished_at:
-                      type: string
-                      format: date-time
+
     CategoryPartition:
       type: object
       properties:
