@@ -5383,6 +5383,7 @@ paths:
             application/json:
               schema:
                $ref: '#/components/schemas/Campaign_Show'
+  '/campaign/{campaign_id}/invalidation':               
     post:
       tags: 
         - post
@@ -5390,7 +5391,7 @@ paths:
       summary: create invalidation for a campaign
       description: create campaign invalidation for to hide the campaign
       parameters:
-        - name: id
+        - name: campaign_id
           in: path
           required: true
           schema:
@@ -5462,7 +5463,7 @@ paths:
             application/json:
               schema:
                   $ref: '#/components/schemas/Campaign_Time_Create'                
-  '/campaign/{campaign_id}/store':
+  '/campaign/{campaign_id}/store_assignment':
     post:
       tags:
        - post
@@ -5512,7 +5513,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CampaignStore'
-  '/campaign/{campaign_id}/store/{assignment_id}':
+  '/campaign/{campaign_id}/store_assignment/{assignment_id}':
     get:
       tags:
         - get
@@ -5542,7 +5543,7 @@ paths:
             application/json:
               schema:
                $ref: '#/components/schemas/CampaignStore'
-  '/campaign/{campaign_id}/item':
+  '/campaign/{campaign_id}/item_assignment':
     post:
       tags:
        - post
@@ -5593,7 +5594,7 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/CampaignItem'
-  '/campaign/{campaign_id}/item/{assignment_id}':
+  '/campaign/{campaign_id}/item_assignment/{assignment_id}':
     get:
       tags:
         - get
@@ -5622,7 +5623,252 @@ paths:
           content:
             application/json:
               schema:
-               $ref: '#/components/schemas/CampaignItem'                  
+               $ref: '#/components/schemas/CampaignItem'
+  '/campaign/{campaign_id}/target':
+    post:
+      tags:
+       - post
+       - campaign
+      summary: create campaign target
+      description:  create expected target of a campaign
+      operationId: createTarget
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_target_create'
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignItem'              
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignTarget
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignTarget'  
+  '/campaign/{campaign_id}/total_traffic':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignTotalTraffic
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignTotalTraffic'    
+  '/campaign/{campaign_id}/product_traffic':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignProductTraffic
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignProductTraffic'
+  '/campaign/{campaign_id}/sale':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignSale
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignSale'
+  '/campaign/{campaign_id}/interaction_funnels':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignInteractionFunnels
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignInteractionFunnels'      
+  '/campaign/{campaign_id}/total_sales':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignTotalSales
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignTotalSales'      
+  '/campaign/{campaign_id}/purchases_potentials':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignPurchasePotentials
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignPurchasePotentials' 
+  '/campaign/{campaign_id}/sale_and_conversion':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get sale and conversion a campaign
+      operationId: getCampaignSaleAndConversion
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignTarget'
+  '/campaign/{campaign_id}/kpi_progressions':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get kpi progressions of a campaign
+      operationId: getCampaignKpiProgressions
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer          
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignKpiProgressions'     
+  '/campaign/{campaign_id}/performance_of_products':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get expected targets of a campaign
+      operationId: getCampaignPerformanceOfProducts
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer   
+        - name: store_id
+          in: query
+          required: true
+          schema:
+            type: integer     
+        - name: campaign_item_type
+          in: query
+          required: true
+          schema:
+            type: integer               
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignPerformanceOfProducts'                  
   /map:
     post:
       tags:
@@ -6561,6 +6807,17 @@ components:
       properties:
         item_id: 
           type: integer
+    campaign_target_create:
+      type: object
+      properties:
+        sales: 
+          type: number
+        total_traffic:
+          type: number
+        product_traffic:
+          type: number
+        conversion:
+          type: number
     merchant_store:
       type: object
       properties:
@@ -7539,7 +7796,204 @@ components:
               item_id:
                 type: integer                
         total_count:
-          type: integer          
+          type: integer  
+    CampaignTarget:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              id:
+                type: integer
+              inserted_at:
+                type: string
+                format: date-time
+              campaign_id:
+                type: integer
+              sales:
+                type: number
+              total_traffic:
+                type: number
+              product_traffic:
+                type: number
+              conversion:
+                type: number
+        total_count:
+          type: integer
+    CampaignTotalTraffic:
+      type: object
+      properties:
+        data:
+          items:
+            type: object
+            properties:
+              campaign_name:
+                type: string
+              campaign_id:
+                type: integer
+              average:
+                type: number
+              campaign_time_type:
+                type: integer
+              campaign_time_type_name:
+                type: string
+              time_compare_Rate:
+                type: number
+    CampaignProductTraffic:
+      type: object
+      properties:
+        data:
+          items:
+            type: object
+            properties:
+              campaign_name:
+                type: string
+              campaign_id:
+                type: integer
+              total_count:
+                type: number
+              time_compare_rate:
+                type: number
+              total_compare_rate:
+                type: number     
+    CampaignSale:
+      type: object
+      properties:
+        data:
+          items:
+            type: object
+            properties:
+              campaign_name:
+                type: string
+              campaign_id:
+                type: integer
+              total_count:
+                type: number
+              time_compare_rate:
+                type: number
+              total_compare_rate:
+                type: number                    
+    CampaignInteractionFunnels:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total_traffic:
+              items:
+                type: object
+                properties:
+                  campaign_name:
+                    type: string
+                  campaign_id:
+                    type: integer
+                  average:
+                    type: number
+                  campaign_time_type:
+                    type: integer
+                  campaign_time_type_name:
+                    type: string
+                  time_compare_Rate:
+                    type: number
+            product_traffic:
+              items:
+                type: object
+                properties:
+                  campaign_name:
+                    type: string
+                  campaign_id:
+                    type: integer
+                  total_count:
+                    type: number
+                  time_compare_rate:
+                    type: number
+                  total_compare_rate:
+                    type: number                
+            sale:
+              items:
+                type: object
+                properties:
+                  campaign_name:
+                    type: string
+                  campaign_id:
+                    type: integer
+                  total_count:
+                    type: number
+                  time_compare_rate:
+                    type: number
+                  total_compare_rate:
+                    type: number                    
+    CampaignTotalSales:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              total_price:
+                type: integer
+              date:
+                type: string
+                format: date-time
+              rate:
+                type: number
+        total_count:
+          type: integer           
+    CampaignPurchasePotentials:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              campaign_name:
+                type: string
+              campaign_id:
+                type: integer
+              campaign_type_name:
+                type: string
+              campaign_type_id:
+                type: integer
+              conversion:
+                type: number
+              interaction_time:
+                type: number
+        total_count:
+          type: integer             
+    CampaignKpiProgressions:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              progress_name:
+                type: string
+              progress:
+                type: integer
+              current:
+                type: integer
+              target_defined:
+                type: boolean
+              target:
+                type: integer
+        total_count:
+          type: integer            
+    CampaignPerformanceOfProducts:
+      type: object
+      properties:
+        data:
+            type: object
+            properties:
+              winner:
+                type: integer
+              traffic_maker:
+                type: integer
+              conversion_maker:
+                type: integer
+              loser:
+                type: integer
     UpdatableModel:
       type: object
       properties:
