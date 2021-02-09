@@ -5328,6 +5328,80 @@ paths:
                   $ref: '#/components/schemas/AverageResponse'
         '400':
           description: bad input parameter
+  /campaign:
+    post:
+      tags:
+        - post
+        - campaign
+      summary: create a campaign
+      description: create campaign 
+      operationId: createCampaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_create'
+      responses:
+        '201':
+          description: result of the created campaing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign_Create'
+    get: 
+      tags:
+        - get 
+        - campaign
+      summary: get campaign list  
+      description: get list of campaings
+      operationId: getListCampaign
+      responses:
+        '200':
+          description: campaign list
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign_Get'
+  '/campaign/{id}':
+    get: 
+      tags:
+        - get 
+        - campaign
+      summary: get a campaign 
+      description: get a campaign
+      operationId: getCampaign
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer      
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign_Show'
+    post:
+      tags: 
+        - post
+        - campaign
+      summary: create invalidation for a campaign
+      description: create campaign invalidation for to hide the campaign
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer      
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Campaign'        
   /map:
     post:
       tags:
@@ -6064,25 +6138,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ZoneStockRate'
   /ab_test:
-    post:
-      tags:
-        - ab test
-        - experimentation
-        - post
-      summary: create ab test
-      description: create ab test
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ab_test_create'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AB_Test_Create'
     get:
       tags:
         - ab test
@@ -6957,13 +7012,11 @@ components:
           type: number
         z:
           type: number
-    ab_test_create:
+    campaign_create:
       type: object
       properties:
-        hypothesis:
+        name:
           type: string
-        test_type_id:
-          type: integer
         user_id:
           type: integer
     ab_test_group_create:
@@ -7878,7 +7931,7 @@ components:
                 type: string
               stock_count:
                 type: integer
-    AB_Test_Create:
+    Campaign_Create:
       type: object
       properties:
         id:
@@ -7886,18 +7939,56 @@ components:
         inserted_at:
           type: string
           format: date-time
-        hypothesis:
-          type: string
-        finished_at:
-          type: string
-          format: date_time
-        test_type_id:
+        name:
           type: string
         user_id:
           type: integer
-        deleted_at:
+    Campaign_Get:
+      type: object
+      properties:
+        data:
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              inserted_at:
+                type: string
+                format: date-time
+              name:
+                type: string
+              user_id:
+                type: integer
+        total_count:
+          type: integer  
+    Campaign_Show:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              id:
+                type: integer
+              inserted_at:
+                type: string
+                format: date-time
+              name:
+                type: string
+              user_id:
+                type: integer
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: integer
+        inserted_at:
           type: string
-          format: date_time
+          format: date-time
+        name:
+          type: string
+        user_id:
+          type: integer                
     ABTestList:
       type: array
       items:
