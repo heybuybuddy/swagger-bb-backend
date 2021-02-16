@@ -5700,6 +5700,32 @@ paths:
             application/json:
               schema:
                $ref: '#/components/schemas/CampaignItem'
+  '/campaign/{campaign_id}/item':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get item list a campaign
+      operationId: get item list a campaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer  
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Item'
+                  total_count:
+                    type: integer
   '/campaign/{campaign_id}/target':
     post:
       tags:
@@ -5884,7 +5910,21 @@ paths:
           in: path
           required: true
           schema:
-            type: integer          
+            type: integer   
+        - name: start_date
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: end_date
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
       responses:
         '200':
           description: campaign 
@@ -7800,7 +7840,7 @@ components:
                 type: string
                 format: date-time
         total_count:
-          type: integer            
+          type: integer   
     Campaign_Show:
       type: object
       properties:
