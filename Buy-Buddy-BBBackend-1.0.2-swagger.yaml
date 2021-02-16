@@ -2375,16 +2375,15 @@ paths:
                   $ref: '#/components/schemas/MerchantDevice'
         '400':
           description: bad input parameter
-  '/merchant/{merchant_id}/store/{id}':
-    put:
+  '/merchant/{merchant_id}/tip':
+    get:
       tags:
-        - put
-        - store
-      summary: update a merchant
+        - get
+        - merchant
+      summary: get tip 
       description: >
-        You can update a store by sending the appropriate parameters. Updatable
-        parameters are name, store_type_id, city_id, address.
-      operationId: merchantstoreupdate
+        You can get a tip belogs this merchant.
+      operationId: getMerchantTip
       parameters:
         - name: merchant_id
           in: path
@@ -2393,31 +2392,16 @@ paths:
           style: simple
           explode: false
           schema:
-            type: integer
-        - name: id
-          in: path
-          description: store identifier
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/merchant_store_update'
+            type: integer      
       responses:
-        '201':
-          description: updated
+        '200':
+          description: gert
           content:
             application/json:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Store'
-        '400':
-          description: bad input parameter
+                  $ref: '#/components/schemas/MerchantTip'
   '/merchant/{merchant_id}/item':
     post:
       tags:
@@ -3438,6 +3422,31 @@ paths:
                 $ref: '#/components/schemas/ScannerManagement'
         '400':
           description: bad input parameter
+  '/merchant/store/{store_id}/daily_traffic':
+    get:
+      tags:
+        - get
+        - merchant
+      summary: get store daily traffic
+      operationId: getStoreDailyTraffic
+      parameters:
+        - name: store_id
+          in: path
+          description: store identifier
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyTraffic'
+        '400':
+          description: bad input parameter          
   /retail_action:
     get:
       tags:
@@ -5513,6 +5522,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CampaignStore'
+  /campaign/store_assignment:
+    post:
+      tags:
+       - post
+       - bulk create store assignment
+       - campaign
+      summary: bulk store assignment create for a campaign
+      operationId: createBulkStoreAssignmentACampaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_store_assignment_bulk_create'
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignStore'         
   '/campaign/{campaign_id}/store_assignment/{assignment_id}':
     get:
       tags:
@@ -5543,6 +5572,32 @@ paths:
             application/json:
               schema:
                $ref: '#/components/schemas/CampaignStore'
+  '/campaign/{campaign_id}/store_sales':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get store sales count
+      description: get store sales count and store rank
+      operationId: getStoreSalesAndRank
+      parameters: 
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer    
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignStoreSales'
   '/campaign/{campaign_id}/item_assignment':
     post:
       tags:
@@ -5594,6 +5649,27 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/CampaignItem'
+  /campaign/item_assignment:
+    post:
+      tags:
+       - post
+       - bulk create item assingment
+       - campaign
+      summary: bulk item assignment create for a campaign
+      description: type only can be Shadow or Campaign 
+      operationId: createBulkItemAssignmentACampaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign_item_assignment_bulk_create'
+      responses:
+        '201':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/CampaignStore'                       
   '/campaign/{campaign_id}/item_assignment/{assignment_id}':
     get:
       tags:
@@ -6791,6 +6867,27 @@ components:
       properties:
         store_id: 
           type: integer
+    campaign_store_assignment_bulk_create:
+      type: object
+      properties:
+        campaign_id: 
+          type: integer
+        store_id:
+          items:
+            type: integer 
+    campaign_item_assignment_bulk_create:
+      type: object
+      properties:
+        campaign_id: 
+          type: integer
+        item_type:
+          items:
+            type: object
+            properties:
+              item_id:
+                type: integer
+              type:
+                type: string
     campaign_time_create_body:
       type: object
       properties:
@@ -6913,17 +7010,6 @@ components:
           type: string
         source_user_id:
           type: integer
-    merchant_store_update:
-      type: object
-      properties:
-        name:
-          type: string
-        store_type_id:
-          type: integer
-        city_id:
-          type: integer
-        address:
-          type: string
     item_create_brand_name:
       type: object
       properties:
@@ -7777,6 +7863,43 @@ components:
                 type: integer
         total_count:
           type: integer
+    MerchantTip:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            inserted_at:
+              type: string
+              format: date-time
+            mercant_id:
+                type: integer
+            tip:
+                type: string
+    CampaignStoreSales:
+      type: object
+      properties:
+        data:
+          items: 
+            type: object
+            properties:
+              id:
+                type: integer            
+              name: 
+                type: string
+              inserted_at:
+                type: string
+                format: date-time
+              campaign_id:
+                type: integer
+              rank_number:  
+                type: integer
+              total_count: 
+                type: integer
+        total_count:
+          type: integer          
     CampaignItem:
       type: object
       properties:
@@ -8226,6 +8349,22 @@ components:
         online_scanner_count:
           type: integer
         total_scanner_count:
+          type: integer
+    DailyTraffic:
+      type: object
+      properties:
+        data:
+          items:
+            properties:
+              id:
+                type: integer
+              inserted_at:
+                type: string
+              store_id:
+                type: integer
+              total_count:
+                type: string
+        total_count:
           type: integer
     Event:
       type: object
