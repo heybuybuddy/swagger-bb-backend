@@ -5984,7 +5984,38 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/CampaignPerformanceOfProducts'                  
+                  $ref: '#/components/schemas/CampaignPerformanceOfProducts'  
+  '/campaign/{campaign_id}/brand/performance':
+    get:
+      tags:
+        - get
+        - campaign
+      summary: get items brands performance of assigned to a campaign
+      operationId: getCampaignPerformanceOfBrands
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer   
+        - name: store_id
+          in: query
+          required: true
+          schema:
+            type: integer     
+        - name: campaign_time_type
+          in: query
+          required: true
+          schema:
+            type: string             
+      responses:
+        '200':
+          description: campaign 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CampaignPerformanceOfProducts'                    
   /map:
     post:
       tags:
@@ -8149,14 +8180,64 @@ components:
         data:
             type: object
             properties:
-              winner:
+              campaign_id:
                 type: integer
-              traffic_maker:
+              brand_id:
                 type: integer
-              conversion_maker:
-                type: integer
-              loser:
-                type: integer
+              brand_name:
+                type: string
+              before_sales:
+                type: number
+              during_sales:
+                type: number
+              after_sales:
+                type: number
+              sales_rate_before_during:
+                type: number
+              sales_rate_during_after:
+                type: number
+              before_traffic_rate:
+                type: number
+              during_traffic_rate:
+                type: number
+              after_traffic_rate:
+                type: number
+              traffic_rate_before_during:
+                type: number
+              traffic_rate_during_after:
+                type: number
+              before_product_traffic:
+                type: number
+              during_product_traffic:
+                type: number
+              after_product_traffic:
+                type: number
+              product_traffic_before_during: 
+                type: number
+              product_traffic_during_after:
+                type: number
+              before_interaction_time:
+                type: number
+              during_interaction_time:
+                type: number
+              after_interaction_time: 
+                type: number
+              interaction_time_before_during:
+                type: number
+              interaction_time_during_after:
+                type: number
+              before_conversion:
+                type: number
+              during_conversion:
+                type: number
+              after_conversion:
+                type: number
+              conversion_before_during:
+                type: number
+              conversion_during_after:
+                type: number
+              performance:
+                type: string
     UpdatableModel:
       type: object
       properties:
